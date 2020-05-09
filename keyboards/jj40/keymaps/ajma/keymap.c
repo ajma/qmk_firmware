@@ -87,4 +87,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, RGB_TOG, RGB_MOD, _______, _______, _______, _______, _______, _______, _______, _______, 
         LOCK,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)};
 
-layer_state_t layer_state_set_user(layer_state_t state) { return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST); }
+const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {30, 30, 30};
+
+const rgblight_segment_t PROGMEM lower_layer_rgb[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 3, HSV_BLUE}
+);
+
+const rgblight_segment_t PROGMEM raise_layer_rgb[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 3, HSV_WHITE}
+);
+
+const rgblight_segment_t PROGMEM adjust_layer_rgb[] = RGBLIGHT_LAYER_SEGMENTS(
+    {1, 3, HSV_GREEN}
+);
+
+// Now define the array of layers. Later layers take precedence
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    lower_layer_rgb,
+    raise_layer_rgb,
+    adjust_layer_rgb
+);
+
+void keyboard_post_init_user(void) {
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    int active_state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    rgblight_set_layer_state(0, layer_state_cmp(active_state, _LOWER));
+    rgblight_set_layer_state(1, layer_state_cmp(active_state, _RAISE));
+    rgblight_set_layer_state(2, layer_state_cmp(active_state, _ADJUST));
+    return active_state;
+}
