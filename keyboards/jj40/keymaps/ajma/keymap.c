@@ -22,8 +22,8 @@ enum layers {
     _ADJUST,
 };
 
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
+#define LOWER TT(_LOWER)
+#define RAISE TT(_RAISE)
 #define CTRL_ESC LCTL_T(KC_ESCAPE)
 #define LOCK LCTL(LGUI(KC_Q))
 
@@ -83,8 +83,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_ADJUST] = LAYOUT_ortho_4x12(
         RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
-        _______, _______, BL_TOGG, BL_STEP, _______, _______, _______, _______, _______, _______, _______, _______, 
-        _______, _______, RGB_TOG, RGB_MOD, _______, _______, _______, _______, _______, _______, _______, _______, 
+        _______, _______, _______, _______, _______, _______, _______, RGB_TOG, RGB_VAI, _______, _______, _______, 
+        _______, _______, _______, _______, _______, _______, _______, RGB_MOD, RGB_VAD, _______, _______, _______, 
         LOCK,    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______)};
 
 const uint8_t RGBLED_RAINBOW_SWIRL_INTERVALS[] PROGMEM = {30, 30, 30};
